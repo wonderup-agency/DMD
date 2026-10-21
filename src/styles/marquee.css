@@ -1,0 +1,32 @@
+/*
+Marquee (see src/components/marquee.js).
+Each .marquee_list moves by its own width plus the track gap (8px, set in
+Webflow on marquee_track), so identical copies loop seamlessly.
+*/
+
+@keyframes marquee-scroll {
+  from {
+    transform: translateX(0);
+  }
+
+  to {
+    transform: translateX(calc(-100% - 8px));
+  }
+}
+
+[data-component='marquee'] .marquee_list {
+  flex-shrink: 0;
+  animation: marquee-scroll var(--marquee-duration, 40s) linear infinite;
+  will-change: transform;
+}
+
+[data-component='marquee']:hover .marquee_list,
+[data-component='marquee'][data-marquee-paused] .marquee_list {
+  animation-play-state: paused;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-component='marquee'] .marquee_list {
+    animation: none;
+  }
+}

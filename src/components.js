@@ -14,6 +14,10 @@
 
 export default [
   {
+    selector: "[data-component='marquee']",
+    importFn: () => import('./components/marquee.js'),
+  },
+  {
     selector: "[data-component='blog-slider']",
     importFn: () => import('./components/blog-slider.js'),
   },
