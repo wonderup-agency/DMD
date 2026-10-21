@@ -1,0 +1,54 @@
+/*
+Button text-roll hover (CTA / Main, CTA / Small, CTA / With Icon, nav links).
+
+Replaces the template's Webflow IX2 hover ("CTA / Hover", "CTA Small / Hover",
+"CTA Icon / Hover"). IX2 writes inline transforms/opacity on these elements, so
+the resting state is locked with !important and the hover state wins by
+specificity. Once those IX2 interactions are deleted in the Designer, the
+!important flags can stay — they are harmless.
+*/
+
+.button_text-mask {
+  position: relative;
+  overflow: hidden;
+}
+
+.button_text {
+  transform: none !important;
+  opacity: 1 !important;
+  transition: transform 0.6s cubic-bezier(0.625, 0.05, 0, 1);
+}
+
+.button_text.is-second {
+  position: absolute;
+  top: 100%;
+  left: 0;
+  right: 0;
+}
+
+.button_bg {
+  transform: none !important;
+}
+
+.icon-button {
+  transform: none !important;
+  transition: transform 0.6s cubic-bezier(0.625, 0.05, 0, 1);
+}
+
+@media (hover: hover) {
+  :is(.button, .button-small, .button-icon, .navbar_link-wrapper):hover
+    .button_text {
+    transform: translateY(-100%) !important;
+  }
+
+  .button-icon:hover .icon-button {
+    transform: translateX(100%) !important;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .button_text,
+  .icon-button {
+    transition: none;
+  }
+}

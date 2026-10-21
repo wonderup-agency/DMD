@@ -12,4 +12,13 @@
 // Both scaffold the file and add an entry here automatically.
 // --------------------------------------------------
 
-export default []
+export default [
+  {
+    selector: "[data-component='blog-slider']",
+    importFn: () => import('./components/blog-slider.js'),
+  },
+  {
+    selector: "[data-component='navbar']",
+    importFn: () => import('./components/navbar.js'),
+  },
+]

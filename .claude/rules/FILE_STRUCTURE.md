@@ -6,7 +6,13 @@
 │   ├── components.js              Component registry (auto-managed by create-component)
 │   ├── config.js                  Shared project config (API keys, endpoints, flags)
 │   ├── components/
-│   │   └── global.js              Runs on every page before components load
+│   │   ├── global.js              Runs on every page before components load
+│   │   ├── navbar.js              Nav hide-on-scroll (data-component="navbar")
+│   │   └── blog-slider.js         Home blog CMS slider arrows (data-component="blog-slider")
+│   ├── styles/
+│   │   ├── buttons.css            Button text-roll hover (imported by global.js)
+│   │   ├── navbar.css             Navbar scroll states (imported by navbar.js)
+│   │   └── blog-slider.css        Blog slider extras (imported by blog-slider.js)
 │   └── pages/
 │       └── .gitkeep               Per-page standalone bundles go here
 │
@@ -60,7 +66,7 @@
 | Page-specific bundle   | `src/pages/<name>.js` (use `npm run create-page`)             |
 | Nested page bundle     | `src/pages/<section>/<name>.js` (e.g., `blog/post.js`)        |
 | Project config         | `src/config.js`                                               |
-| CSS                    | Import in any JS file — extracts to `dist/styles.css`         |
+| CSS                    | `src/styles/<name>.css`, imported by its JS file — extracts to `dist/styles.css` |
 | Node scripts           | `scripts/`                                                    |
 | Component docs         | `.claude/rules/components/<name>.md`                          |
 | Page docs              | `.claude/rules/pages/<name>.md`                               |

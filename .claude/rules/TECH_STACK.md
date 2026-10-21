@@ -23,7 +23,7 @@
 
 ## Linting & Formatting
 
-- **ESLint** (v9, flat config) — `eslint.config.js` uses `@eslint/js` recommended + `eslint-config-prettier`
+- **ESLint** (v9, flat config) — `eslint.config.js` uses `@eslint/js` recommended + `eslint-config-prettier`. Browser globals declared: `document`, `window`, `console`, `setTimeout`, `clearTimeout`, `requestAnimationFrame`
 - **Prettier** — default config (no `.prettierrc` file, uses Prettier defaults)
 - Runs automatically before prod builds via `prebuild` script
 

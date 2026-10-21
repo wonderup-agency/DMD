@@ -1,0 +1,21 @@
+/* Blog slider (see src/components/blog-slider.js) */
+
+[data-component='blog-slider'] .home-blog_list {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+[data-component='blog-slider'] .home-blog_list::-webkit-scrollbar {
+  display: none;
+}
+
+/* Hide a card tag when its CMS field is empty */
+[data-component='blog-slider'] .tag_component:has(.w-dyn-bind-empty) {
+  display: none;
+}
+
+[data-component='blog-slider'] [data-blog-prev]:disabled,
+[data-component='blog-slider'] [data-blog-next]:disabled {
+  opacity: 0.48;
+  cursor: default;
+}
