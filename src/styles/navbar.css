@@ -12,7 +12,7 @@ it only relayouts the fixed nav itself, so it stays smooth.
 }
 
 [data-component='navbar'] .navbar_container {
-  transition: padding 0.4s cubic-bezier(0.625, 0.05, 0, 1);
+  transition: padding 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 [data-component='navbar'][data-nav-scrolled] .navbar_container {
@@ -21,7 +21,7 @@ it only relayouts the fixed nav itself, so it stays smooth.
 }
 
 [data-component='navbar'] .navbar_logo-link {
-  transition: width 0.4s cubic-bezier(0.625, 0.05, 0, 1);
+  transition: width 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 [data-component='navbar'][data-nav-scrolled] .navbar_logo-link {
@@ -29,7 +29,7 @@ it only relayouts the fixed nav itself, so it stays smooth.
 }
 
 [data-component='navbar'] .navbar_component {
-  transition: box-shadow 0.3s ease;
+  transition: box-shadow 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
 [data-component='navbar'][data-nav-scrolled] .navbar_component {

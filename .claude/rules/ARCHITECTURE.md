@@ -51,7 +51,7 @@ An array of `{ selector, importFn }` objects. The selector uses `data-component`
 
 Loaded before any components. Runs on every page regardless of data attributes. Use for analytics, global event listeners, shared setup.
 
-In DMD it imports `src/styles/buttons.css` (site-wide button text-roll hover that replaces the template IX2 button interactions).
+In DMD it imports `src/styles/buttons.css` (site-wide button hover that recreates the Forerunner diagonal text roll and replaces the template IX2 button interactions).
 
 ### Lifecycle
 

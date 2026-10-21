@@ -1,11 +1,15 @@
 /*
 Button text-roll hover (CTA / Main, CTA / Small, CTA / With Icon, nav links).
 
-Replaces the template's Webflow IX2 hover ("CTA / Hover", "CTA Small / Hover",
-"CTA Icon / Hover"). IX2 writes inline transforms/opacity on these elements, so
-the resting state is locked with !important and the hover state wins by
-specificity. Once those IX2 interactions are deleted in the Designer, the
-!important flags can stay — they are harmless.
+Recreates the Forerunner template hover in CSS: on hover both labels roll up
+while the outgoing one skews 8deg (the diagonal) and the incoming one
+straightens from 8deg to 0, the background scales to 0.95 and the icon slides
+right. Timings mirror the template IX2 (800ms, cubic-bezier(.625,.05,0,1),
+label swap at 150ms / 400ms).
+
+The template IX2 interactions still write inline styles on these elements, so
+every animated property is set with !important (beats inline styles). They can
+stay once the IX2 interactions are deleted in the Designer.
 */
 
 .button_text-mask {
@@ -14,9 +18,15 @@ specificity. Once those IX2 interactions are deleted in the Designer, the
 }
 
 .button_text {
-  transform: none !important;
+  transition:
+    transform 0.8s cubic-bezier(0.625, 0.05, 0, 1),
+    opacity 0s linear 0.15s;
+}
+
+/* Resting state (also the target when the pointer leaves) */
+.button_text.is-first {
+  transform: translateY(0) skewY(0deg) !important;
   opacity: 1 !important;
-  transition: transform 0.6s cubic-bezier(0.625, 0.05, 0, 1);
 }
 
 .button_text.is-second {
@@ -24,21 +34,44 @@ specificity. Once those IX2 interactions are deleted in the Designer, the
   top: 100%;
   left: 0;
   right: 0;
+  transform: translateY(0) skewY(8deg) !important;
+  opacity: 0 !important;
+  transition:
+    transform 0.8s cubic-bezier(0.625, 0.05, 0, 1),
+    opacity 0s linear 0.4s;
 }
 
 .button_bg {
-  transform: none !important;
+  transform: scale(1) !important;
+  transition: transform 0.8s cubic-bezier(0.625, 0.05, 0, 1);
 }
 
 .button-icon_icon {
-  transform: none !important;
-  transition: transform 0.6s cubic-bezier(0.625, 0.05, 0, 1);
+  transform: translateX(0) !important;
+  transition: transform 0.8s cubic-bezier(0.625, 0.05, 0, 1);
 }
 
 @media (hover: hover) {
   :is(.button, .button-small, .button-icon, .navbar_link-wrapper):hover
-    .button_text {
-    transform: translateY(-100%) !important;
+    .button_text.is-first {
+    transform: translateY(-100%) skewY(8deg) !important;
+    opacity: 0 !important;
+    transition:
+      transform 0.8s cubic-bezier(0.625, 0.05, 0, 1),
+      opacity 0s linear 0.4s;
+  }
+
+  :is(.button, .button-small, .button-icon, .navbar_link-wrapper):hover
+    .button_text.is-second {
+    transform: translateY(-100%) skewY(0deg) !important;
+    opacity: 1 !important;
+    transition:
+      transform 0.8s cubic-bezier(0.625, 0.05, 0, 1),
+      opacity 0s linear 0.15s;
+  }
+
+  :is(.button, .button-small, .button-icon):hover .button_bg {
+    transform: scale(0.95) !important;
   }
 
   .button-icon:hover .button-icon_icon {
@@ -48,7 +81,9 @@ specificity. Once those IX2 interactions are deleted in the Designer, the
 
 @media (prefers-reduced-motion: reduce) {
   .button_text,
+  .button_text.is-second,
+  .button_bg,
   .button-icon_icon {
-    transition: none;
+    transition: none !important;
   }
 }

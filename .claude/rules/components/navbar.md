@@ -20,7 +20,7 @@ Nav / Popup is hidden on pages that use this nav.
 
 ## Styles
 
-`src/styles/navbar.css`. Locks `.navbar_wrapper` transform with `!important` to neutralize the IX2 inline transforms. Transitions `.navbar_container` padding, `.navbar_logo-link` width (relayout is limited to the fixed nav) and `.navbar_component` box-shadow. Respects `prefers-reduced-motion`.
+`src/styles/navbar.css`. Locks `.navbar_wrapper` transform with `!important` to neutralize the IX2 inline transforms. Transitions `.navbar_container` padding, `.navbar_logo-link` width (relayout is limited to the fixed nav) and `.navbar_component` box-shadow. All three use 0.8s `cubic-bezier(0.22, 1, 0.36, 1)` (ease-out quint) for a slow, soft compact. Respects `prefers-reduced-motion`.
 
 ## Dependencies
 
