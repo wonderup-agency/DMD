@@ -11,7 +11,9 @@ const mobileQuery = window.matchMedia('(max-width: 767px)')
  * How It Works steps. Each tab link expands its description (data-step-open).
  * Desktop/tablet: behaves like the Webflow tabs, one step always open and the
  * image pane follows the active tab. Mobile (<= 767px): works as an accordion,
- * tapping an open step closes it and the image panes are hidden (CSS).
+ * tapping an open step closes it. The image panes are hidden on mobile (CSS);
+ * instead each step gets a copy of its pane image inside its body
+ * ([data-step-media], shown only on mobile).
  * Replaces the template IX2 "Tab Accordion / Open|Close" height animation.
  * @param {HTMLElement[]} elements - All elements matching [data-component='how-accordion']
  */
@@ -22,6 +24,25 @@ export default function (elements) {
       console.warn('[how-accordion] No .home-how_tab-link found', tabs)
       return
     }
+
+    // Copy each pane's image into its step so the mobile accordion shows it
+    links.forEach((link) => {
+      const tab = link.getAttribute('data-w-tab')
+      const pane = tabs.querySelector(
+        `.w-tab-pane[data-w-tab="${window.CSS.escape(tab || '')}"]`
+      )
+      const media = pane && pane.querySelector('.home-how_image-wrapper')
+      const body = link.querySelector('.home-how_step-text')
+      if (!media || !body || body.querySelector('[data-step-media]')) return
+      const copy = media.cloneNode(true)
+      copy.setAttribute('data-step-media', '')
+      copy.setAttribute('aria-hidden', 'true')
+      copy.querySelectorAll('[id], [data-w-id]').forEach((el) => {
+        el.removeAttribute('id')
+        el.removeAttribute('data-w-id')
+      })
+      body.appendChild(copy)
+    })
 
     const open = (link) =>
       links.forEach((l) => l.toggleAttribute('data-step-open', l === link))

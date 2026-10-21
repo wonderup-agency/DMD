@@ -20,9 +20,14 @@ template IX2 "Tab Accordion" inline heights.
   padding-bottom: 0 !important;
 }
 
-[data-component='how-accordion'] .home-how_step-text > * {
+[data-component='how-accordion'] .home-how_step-text > :first-child {
   padding-top: 1rem;
   padding-bottom: 3rem;
+}
+
+/* Step image copied from its tab pane by how-accordion.js (mobile only) */
+[data-component='how-accordion'] [data-step-media] {
+  display: none;
 }
 
 [data-component='how-accordion'] [data-step-open] .home-how_step-body {
@@ -32,6 +37,17 @@ template IX2 "Tab Accordion" inline heights.
 @media (max-width: 767px) {
   [data-component='how-accordion'] .home-how_tabs-content {
     display: none;
+  }
+
+  [data-component='how-accordion'] .home-how_step-text > :first-child {
+    padding-bottom: 1.5rem;
+  }
+
+  [data-component='how-accordion'] [data-step-media] {
+    display: block;
+    height: auto;
+    aspect-ratio: 4 / 3;
+    margin-bottom: 0.5rem;
   }
 }
 
