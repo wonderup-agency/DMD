@@ -7,7 +7,7 @@
 │   ├── config.js                  Shared project config (API keys, endpoints, flags)
 │   ├── components/
 │   │   ├── global.js              Runs on every page before components load
-│   │   ├── navbar.js              Nav hide-on-scroll (data-component="navbar")
+│   │   ├── navbar.js              Nav compacts on scroll (data-component="navbar")
 │   │   └── blog-slider.js         Home blog CMS slider arrows (data-component="blog-slider")
 │   ├── styles/
 │   │   ├── buttons.css            Button text-roll hover (imported by global.js)

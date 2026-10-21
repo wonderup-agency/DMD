@@ -30,7 +30,7 @@ specificity. Once those IX2 interactions are deleted in the Designer, the
   transform: none !important;
 }
 
-.icon-button {
+.button-icon_icon {
   transform: none !important;
   transition: transform 0.6s cubic-bezier(0.625, 0.05, 0, 1);
 }
@@ -41,14 +41,14 @@ specificity. Once those IX2 interactions are deleted in the Designer, the
     transform: translateY(-100%) !important;
   }
 
-  .button-icon:hover .icon-button {
+  .button-icon:hover .button-icon_icon {
     transform: translateX(100%) !important;
   }
 }
 
 @media (prefers-reduced-motion: reduce) {
   .button_text,
-  .icon-button {
+  .button-icon_icon {
     transition: none;
   }
 }

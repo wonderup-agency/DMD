@@ -5,45 +5,25 @@ Webflow attribute: data-component="navbar" (root of the Navbar / Blured componen
 
 import '../styles/navbar.css'
 
-const scrolledOffset = 24 // px from top before the shadow appears
-const hideAfter = 120 // never hide while the nav is still near the top
-const tolerance = 8 // ignore tiny scroll jitters
+const scrolledOffset = 24 // px from top before the nav compacts
 
 /**
- * Hides the nav when scrolling down and shows it again on scroll up.
- * State is exposed as data attributes so styling stays in navbar.css:
- *   data-nav-scrolled  page is scrolled past scrolledOffset
- *   data-nav-hidden    nav is slid out of view
+ * Compacts the nav once the page is scrolled: sets data-nav-scrolled on the
+ * root, and navbar.css transitions the bar padding and logo width (84px -> ~54px
+ * tall) and adds a soft shadow. The nav stays visible at all times.
  * @param {HTMLElement[]} elements - All elements matching [data-component='navbar']
  */
 export default function (elements) {
   elements.forEach((nav) => {
-    let lastY = window.scrollY
     let ticking = false
-
-    // Keep the nav visible while the mobile menu or a dropdown is open
-    const isLocked = () =>
-      nav.querySelector('.w--open, .w--nav-menu-open, [data-nav-menu-open]') !==
-      null
+    let scrolled = null
 
     const update = () => {
       ticking = false
-      const y = Math.max(window.scrollY, 0)
-
-      nav.toggleAttribute('data-nav-scrolled', y > scrolledOffset)
-
-      if (y <= hideAfter) {
-        nav.removeAttribute('data-nav-hidden')
-        lastY = y
-        return
-      }
-
-      const delta = y - lastY
-      if (Math.abs(delta) < tolerance) return
-
-      if (delta > 0 && !isLocked()) nav.setAttribute('data-nav-hidden', '')
-      else if (delta < 0) nav.removeAttribute('data-nav-hidden')
-      lastY = y
+      const next = window.scrollY > scrolledOffset
+      if (next === scrolled) return // only touch the DOM when the state flips
+      scrolled = next
+      nav.toggleAttribute('data-nav-scrolled', next)
     }
 
     window.addEventListener(
@@ -54,11 +34,6 @@ export default function (elements) {
         requestAnimationFrame(update)
       },
       { passive: true }
-    )
-
-    // Showing the nav on keyboard focus keeps it accessible
-    nav.addEventListener('focusin', () =>
-      nav.removeAttribute('data-nav-hidden')
     )
 
     update()

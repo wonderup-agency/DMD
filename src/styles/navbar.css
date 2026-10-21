@@ -1,20 +1,31 @@
 /*
 Navbar scroll behavior (see src/components/navbar.js).
+
 The wrapper transform is locked to neutralize the template IX2 "Navbar / Scroll"
-(it shrank this nav and swapped in Nav / Popup). Motion happens on .navbar_outer.
+(it shrank this nav and swapped in Nav / Popup). On scroll the bar compacts by
+transitioning the container padding and the logo width (84px -> ~54px tall):
+it only relayouts the fixed nav itself, so it stays smooth.
 */
 
 [data-component='navbar'].navbar_wrapper {
   transform: none !important;
 }
 
-[data-component='navbar'] .navbar_outer {
-  transition: transform 0.45s cubic-bezier(0.625, 0.05, 0, 1);
-  will-change: transform;
+[data-component='navbar'] .navbar_container {
+  transition: padding 0.4s cubic-bezier(0.625, 0.05, 0, 1);
 }
 
-[data-component='navbar'][data-nav-hidden] .navbar_outer {
-  transform: translateY(calc(-100% - 0.75rem));
+[data-component='navbar'][data-nav-scrolled] .navbar_container {
+  padding-top: 0.5rem;
+  padding-bottom: 0.5rem;
+}
+
+[data-component='navbar'] .navbar_logo-link {
+  transition: width 0.4s cubic-bezier(0.625, 0.05, 0, 1);
+}
+
+[data-component='navbar'][data-nav-scrolled] .navbar_logo-link {
+  width: 4.5rem;
 }
 
 [data-component='navbar'] .navbar_component {
@@ -26,7 +37,9 @@ The wrapper transform is locked to neutralize the template IX2 "Navbar / Scroll"
 }
 
 @media (prefers-reduced-motion: reduce) {
-  [data-component='navbar'] .navbar_outer {
+  [data-component='navbar'] .navbar_container,
+  [data-component='navbar'] .navbar_logo-link,
+  [data-component='navbar'] .navbar_component {
     transition: none;
   }
 }

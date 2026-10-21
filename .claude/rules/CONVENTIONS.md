@@ -83,5 +83,5 @@ Components are registered in `src/components.js` as an array of `{ selector, imp
 
 - No inline `<script>`/`<style>` Code Embeds in Webflow for behavior or styling: all custom code lives in this repo.
 - Animations are custom code here, not Webflow IX2. When a template IX2 interaction still runs on an element, neutralize it in CSS (lock the property with `!important`) and animate a different property or a child element; then delete the IX2 interaction in the Designer.
-- JS-driven state is exposed as data attributes (`data-nav-hidden`, `data-nav-scrolled`), not extra classes, so it never collides with Client-First classes from Webflow.
+- JS-driven state is exposed as data attributes (e.g. `data-nav-scrolled`), not extra classes, so it never collides with Client-First classes from Webflow.
 - Selectors may use Webflow Client-First classes (`.home-blog_list`); scope component CSS under its `[data-component='...']` root.
