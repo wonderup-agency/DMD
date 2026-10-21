@@ -28,7 +28,11 @@ it only relayouts the fixed nav itself, so it stays smooth.
   width: 4.5rem;
 }
 
+/* Always a solid white bar: the template IX2 tints/fades it on scroll and menu open */
 [data-component='navbar'] .navbar_component {
+  background-color: #fff !important;
+  opacity: 1 !important;
+  backdrop-filter: none !important;
   transition: box-shadow 0.8s cubic-bezier(0.22, 1, 0.36, 1);
 }
 

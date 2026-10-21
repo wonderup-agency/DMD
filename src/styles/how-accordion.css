@@ -1,0 +1,42 @@
+/*
+How It Works accordion (see src/components/how-accordion.js).
+The step body animates with the grid-template-rows 0fr -> 1fr technique (no
+height measuring in JS). height is locked with !important to neutralize the
+template IX2 "Tab Accordion" inline heights.
+*/
+
+[data-component='how-accordion'] .home-how_step-body {
+  display: grid !important;
+  grid-template-rows: 0fr;
+  height: auto !important;
+  transition: grid-template-rows 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Padding moves to the inner text so the collapsed row can reach 0px */
+[data-component='how-accordion'] .home-how_step-text {
+  min-height: 0;
+  overflow: hidden;
+  padding-top: 0 !important;
+  padding-bottom: 0 !important;
+}
+
+[data-component='how-accordion'] .home-how_step-text > * {
+  padding-top: 1rem;
+  padding-bottom: 3rem;
+}
+
+[data-component='how-accordion'] [data-step-open] .home-how_step-body {
+  grid-template-rows: 1fr;
+}
+
+@media (max-width: 767px) {
+  [data-component='how-accordion'] .home-how_tabs-content {
+    display: none;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-component='how-accordion'] .home-how_step-body {
+    transition: none;
+  }
+}

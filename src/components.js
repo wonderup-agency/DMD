@@ -14,6 +14,10 @@
 
 export default [
   {
+    selector: "[data-component='how-accordion']",
+    importFn: () => import('./components/how-accordion.js'),
+  },
+  {
     selector: "[data-component='marquee']",
     importFn: () => import('./components/marquee.js'),
   },
