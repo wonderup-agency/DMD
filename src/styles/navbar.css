@@ -33,7 +33,9 @@ it only relayouts the fixed nav itself, so it stays smooth.
   background-color: #fff !important;
   opacity: 1 !important;
   backdrop-filter: none !important;
-  transition: box-shadow 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  transition:
+    box-shadow 0.8s cubic-bezier(0.22, 1, 0.36, 1),
+    background-color 0.4s ease;
 }
 
 [data-component='navbar'][data-nav-scrolled] .navbar_component {
@@ -46,4 +48,31 @@ it only relayouts the fixed nav itself, so it stays smooth.
   [data-component='navbar'] .navbar_component {
     transition: none;
   }
+}
+
+/*
+Dark state: the bar sits over the video hero (data-nav-theme="dark").
+Translucent bar, white links, white logo. When the mobile menu is open it
+falls back to the regular white bar so the menu stays readable.
+*/
+[data-component='navbar'][data-nav-dark]:not(:has(.w-nav-button.w--open))
+  .navbar_component {
+  background-color: rgba(255, 255, 255, 0.08) !important;
+  backdrop-filter: blur(16px) !important;
+  box-shadow: none;
+}
+
+[data-component='navbar'][data-nav-dark]:not(:has(.w-nav-button.w--open))
+  :is(.navbar_link, .navbar_dropdown-toggle, .navbar_menu-button) {
+  color: #fff;
+}
+
+[data-component='navbar'][data-nav-dark]:not(:has(.w-nav-button.w--open))
+  .navbar_logo {
+  display: none;
+}
+
+[data-component='navbar'][data-nav-dark]:not(:has(.w-nav-button.w--open))
+  .navbar_logo.is-light {
+  display: block;
 }

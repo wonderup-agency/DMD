@@ -1,0 +1,87 @@
+/* Component: hero-video (see src/components/hero-video.js) */
+
+/* Background loop: covers the hero like object-fit: cover.
+   The video is ~1.9:1, so it fills whichever side runs out first. */
+[data-component='hero-video'] {
+  container-type: size;
+}
+
+[data-component='hero-video'] .hero-video_loop {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: max(100cqw, 190cqh);
+  height: max(100cqh, 52.7cqw);
+  border: 0;
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+  opacity: 0;
+  transition: opacity 1s ease;
+}
+
+[data-component='hero-video'][data-video-playing] .hero-video_loop {
+  opacity: 1;
+}
+
+/* Full video dialog */
+.hero-video_dialog {
+  width: min(90vw, 160vh);
+  /* close button sits first in the dialog so it gets focus on open
+     (Escape then works; focus inside the Vimeo iframe would swallow it) */
+  max-width: none;
+  max-height: none;
+  padding: 0;
+  border: 0;
+  background: transparent;
+  overflow: visible;
+}
+
+.hero-video_dialog::backdrop {
+  background-color: rgba(5, 13, 23, 0.88);
+}
+
+.hero-video_frame {
+  aspect-ratio: 426 / 224; /* the video's own ratio, no letterbox */
+  border-radius: 8px;
+  overflow: hidden;
+  background-color: #000;
+}
+
+.hero-video_frame iframe {
+  display: block;
+  width: 100%;
+  height: 100%;
+  border: 0;
+}
+
+.hero-video_close {
+  position: absolute;
+  top: -3rem;
+  right: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 0;
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: 999px;
+  background-color: transparent;
+  color: #fff;
+  cursor: pointer;
+}
+
+.hero-video_close:hover {
+  background-color: rgba(255, 255, 255, 0.12);
+}
+
+.hero-video_close:focus-visible {
+  outline: 2px solid #fff;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  [data-component='hero-video'] .hero-video_loop {
+    transition: none;
+  }
+}
