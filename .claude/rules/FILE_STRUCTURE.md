@@ -10,13 +10,15 @@
 │   │   ├── navbar.js              Nav compacts on scroll (data-component="navbar")
 │   │   ├── blog-slider.js         Home blog CMS slider arrows (data-component="blog-slider")
 │   │   ├── marquee.js             Infinite testimonials marquee (data-component="marquee")
-│   │   └── how-accordion.js       How It Works steps / mobile accordion (data-component="how-accordion")
+│   │   ├── how-accordion.js       How It Works steps / mobile accordion (data-component="how-accordion")
+│   │   └── counter.js             Stat number count-up on scroll (data-component="counter")
 │   ├── styles/
 │   │   ├── buttons.css            Button text-roll hover (imported by global.js)
 │   │   ├── navbar.css             Navbar scroll states (imported by navbar.js)
 │   │   ├── blog-slider.css        Blog slider extras (imported by blog-slider.js)
 │   │   ├── marquee.css            Marquee keyframes (imported by marquee.js)
-│   │   └── how-accordion.css      Step body grid-rows animation (imported by how-accordion.js)
+│   │   ├── how-accordion.css      Step body grid-rows animation (imported by how-accordion.js)
+│   │   └── counter.css            Tabular digits for counters (imported by counter.js)
 │   └── pages/
 │       └── .gitkeep               Per-page standalone bundles go here
 │

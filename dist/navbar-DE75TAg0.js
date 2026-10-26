@@ -1,0 +1,1 @@
+function t(t){t.forEach(t=>{let e=!1,n=null;const o=()=>{e=!1;const o=window.scrollY>24;o!==n&&(n=o,t.toggleAttribute("data-nav-scrolled",o))};window.addEventListener("scroll",()=>{e||(e=!0,requestAnimationFrame(o))},{passive:!0}),o()})}export{t as default};

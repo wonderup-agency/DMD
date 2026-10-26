@@ -14,6 +14,10 @@
 
 export default [
   {
+    selector: "[data-component='counter']",
+    importFn: () => import('./components/counter.js'),
+  },
+  {
     selector: "[data-component='how-accordion']",
     importFn: () => import('./components/how-accordion.js'),
   },

@@ -1,0 +1,5 @@
+/* Component: counter
+   Fixed-width digits so the number doesn't wobble while it counts up */
+[data-component='counter'] {
+  font-variant-numeric: tabular-nums;
+}
