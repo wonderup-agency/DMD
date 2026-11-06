@@ -1,19 +1,12 @@
 /* Component: hero-video (see src/components/hero-video.js) */
 
-/* Background loop: covers the hero like object-fit: cover.
-   The video is ~1.9:1, so it fills whichever side runs out first. */
-[data-component='hero-video'] {
-  container-type: size;
-}
-
+/* Background loop: native <video> covering the hero */
 [data-component='hero-video'] .hero-video_loop {
   position: absolute;
-  top: 50%;
-  left: 50%;
-  width: max(100cqw, 190cqh);
-  height: max(100cqh, 52.7cqw);
-  border: 0;
-  transform: translate(-50%, -50%);
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   pointer-events: none;
   opacity: 0;
   transition: opacity 1s ease;
@@ -27,7 +20,7 @@
 .hero-video_dialog {
   width: min(90vw, 160vh);
   /* close button sits first in the dialog so it gets focus on open
-     (Escape then works; focus inside the Vimeo iframe would swallow it) */
+     (Escape then works even before the video controls take focus) */
   max-width: none;
   max-height: none;
   padding: 0;
@@ -41,17 +34,17 @@
 }
 
 .hero-video_frame {
-  aspect-ratio: 426 / 224; /* the video's own ratio, no letterbox */
+  aspect-ratio: 16 / 9; /* the video's own ratio, no letterbox */
   border-radius: 8px;
   overflow: hidden;
   background-color: #000;
 }
 
-.hero-video_frame iframe {
+.hero-video_frame video {
   display: block;
   width: 100%;
   height: 100%;
-  border: 0;
+  background-color: #000;
 }
 
 .hero-video_close {

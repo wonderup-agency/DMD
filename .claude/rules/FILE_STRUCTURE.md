@@ -12,7 +12,7 @@
 │   │   ├── marquee.js             Infinite testimonials marquee (data-component="marquee")
 │   │   ├── how-accordion.js       How It Works steps / mobile accordion (data-component="how-accordion")
 │   │   ├── counter.js             Stat number count-up on scroll (data-component="counter")
-│   │   └── hero-video.js          Home hero Vimeo loop + Play Video modal (data-component="hero-video")
+│   │   └── hero-video.js          Home hero muted video loop + Play Video modal (data-component="hero-video")
 │   ├── styles/
 │   │   ├── buttons.css            Button text-roll hover (imported by global.js)
 │   │   ├── navbar.css             Navbar scroll and dark-hero states (imported by navbar.js)

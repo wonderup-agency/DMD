@@ -1,54 +1,47 @@
 /*
 Component: hero-video
 Webflow attribute: data-component="hero-video" (on home-hero_background, inside the Home Hero component)
-Required: data-vimeo-id="1236634595"
-Optional: data-vimeo-hash="4f6e2ce26f" (private link hash)
+Required: data-video-src="<mp4 url>" (muted background loop, Webflow asset, no captions)
+Optional: data-video-full="<mp4 url>" (full video with sound for the Play Video dialog)
 Play trigger: any element with data-hero-video-play inside the same hero section
 */
 
 import '../styles/hero-video.css'
 
-const vimeoOrigin = 'https://player.vimeo.com'
-
-const playerUrl = (id, hash, params) => {
-  const query = new window.URLSearchParams(params)
-  if (hash) query.set('h', hash)
-  return `${vimeoOrigin}/video/${id}?${query.toString()}`
-}
-
-const createIframe = (src, title) => {
-  const iframe = document.createElement('iframe')
-  iframe.src = src
-  iframe.title = title
-  iframe.allow = 'autoplay; fullscreen; picture-in-picture'
-  iframe.setAttribute('allowfullscreen', '')
-  iframe.setAttribute('frameborder', '0')
-  return iframe
-}
-
-// Sends a Vimeo Player API command through postMessage (no SDK needed)
-const command = (iframe, method, value) => {
-  if (!iframe || !iframe.contentWindow) return
-  const message = value === undefined ? { method } : { method, value }
-  iframe.contentWindow.postMessage(JSON.stringify(message), vimeoOrigin)
+/**
+ * Creates a <video> element with the given attributes.
+ * @param {string} src - Video URL
+ * @param {Object} options - Boolean attributes to set (muted, loop, ...)
+ * @returns {HTMLVideoElement}
+ */
+const createVideo = (src, options) => {
+  const video = document.createElement('video')
+  Object.entries(options).forEach(([key, value]) => {
+    if (value) video.setAttribute(key, '')
+    video[key] = value
+  })
+  video.src = src
+  return video
 }
 
 /**
- * Video hero. Behind the hero content it plays the Vimeo video muted and on
- * loop (Vimeo background mode) over the poster image, and fades it in once
- * Vimeo reports it is playing. The "Play Video" button opens the full video
- * with sound in a native <dialog>; closing it removes the player.
+ * Video hero. Behind the hero content it plays a muted loop (native <video>,
+ * hosted as a Webflow asset) over the poster image and fades it in once it
+ * is playing. The loop pauses while the hero is off screen. The "Play Video"
+ * button opens the full video with sound in a native <dialog>; closing it
+ * removes the player and resumes the loop.
  * @param {HTMLElement[]} elements - All elements matching [data-component='hero-video']
  */
 export default function (elements) {
   const reduceMotion = window.matchMedia(
     '(prefers-reduced-motion: reduce)'
   ).matches
+  const saveData = Boolean(window.navigator.connection?.saveData)
 
   elements.forEach((background) => {
-    const { vimeoId, vimeoHash } = background.dataset
-    if (!vimeoId) {
-      console.warn('[hero-video] Missing data-vimeo-id', background)
+    const { videoSrc, videoFull } = background.dataset
+    if (!videoSrc) {
+      console.warn('[hero-video] Missing data-video-src', background)
       return
     }
 
@@ -57,41 +50,35 @@ export default function (elements) {
     let loop = null
 
     // ── Background loop (muted, no controls) ─────────────────────────
-    if (!reduceMotion) {
-      loop = createIframe(
-        playerUrl(vimeoId, vimeoHash, {
-          background: 1,
-          autoplay: 1,
-          loop: 1,
-          muted: 1,
-          autopause: 0,
-          dnt: 1,
-        }),
-        'Background video'
-      )
+    if (!reduceMotion && !saveData) {
+      loop = createVideo(videoSrc, {
+        muted: true,
+        loop: true,
+        autoplay: true,
+        playsInline: true,
+      })
       loop.className = 'hero-video_loop'
+      loop.preload = 'auto'
       loop.setAttribute('aria-hidden', 'true')
       loop.tabIndex = -1
+      loop.addEventListener(
+        'playing',
+        () => background.setAttribute('data-video-playing', ''),
+        { once: true }
+      )
       background.appendChild(loop)
 
-      window.addEventListener('message', (event) => {
-        if (event.origin !== vimeoOrigin || event.source !== loop.contentWindow)
-          return
-        let data = event.data
-        try {
-          data = typeof data === 'string' ? JSON.parse(data) : data
-        } catch {
-          return
-        }
-        if (data.event === 'ready') command(loop, 'addEventListener', 'play')
-        if (data.event === 'play')
-          background.setAttribute('data-video-playing', '')
+      // Only play while the hero is on screen
+      const observer = new window.IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) loop.play().catch(() => {})
+        else loop.pause()
       })
+      observer.observe(background)
     }
 
     // ── Full video in a dialog ───────────────────────────────────────
     const triggers = hero.querySelectorAll('[data-hero-video-play]')
-    if (!triggers.length) return
+    if (!triggers.length || !videoFull) return
 
     const dialog = document.createElement('dialog')
     dialog.className = 'hero-video_dialog'
@@ -108,13 +95,14 @@ export default function (elements) {
 
     const open = (event) => {
       event.preventDefault()
-      frame.replaceChildren(
-        createIframe(
-          playerUrl(vimeoId, vimeoHash, { autoplay: 1, dnt: 1 }),
-          'DMD Systems Recovery video'
-        )
-      )
-      command(loop, 'pause')
+      const player = createVideo(videoFull, {
+        controls: true,
+        autoplay: true,
+        playsInline: true,
+      })
+      player.setAttribute('aria-label', 'DMD Systems Recovery video')
+      frame.replaceChildren(player)
+      loop?.pause()
       dialog.showModal()
     }
 
@@ -130,8 +118,9 @@ export default function (elements) {
 
     // Escape and close() both land here: stop the full video, resume the loop
     dialog.addEventListener('close', () => {
+      frame.querySelector('video')?.pause()
       frame.replaceChildren()
-      command(loop, 'play')
+      loop?.play().catch(() => {})
     })
   })
 }
