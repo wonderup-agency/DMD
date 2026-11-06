@@ -36,7 +36,9 @@ item stagger and the chevron run there, and links keep the Webflow hover.
 }
 
 [data-component='navbar'] .navbar_menu-dropdown-toggle {
-  transition: background-color 0.35s var(--dd-ease-out);
+  transition:
+    background-color 0.35s var(--dd-ease-out),
+    color 0.35s var(--dd-ease-out);
 }
 
 /* ── Links: text nudge + lime arrow (all breakpoints) ────────────── */

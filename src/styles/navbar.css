@@ -63,8 +63,22 @@ falls back to the regular white bar so the menu stays readable.
 }
 
 [data-component='navbar'][data-nav-dark]:not(:has(.w-nav-button.w--open))
-  :is(.navbar_link, .navbar_dropdown-toggle, .navbar_menu-button) {
+  :is(
+    .navbar_link,
+    .navbar_dropdown-toggle,
+    .navbar_menu-button,
+    .navbar_menu-dropdown-toggle,
+    .navbar_menu-dropdown-icon
+  ) {
   color: #fff;
+}
+
+/* Dropdown toggles over the dark hero: the Webflow hover / open tint is
+   BG 1 (near white), which would hide the white label. Use a soft white
+   glass tint instead. The dropdown card itself stays white. */
+[data-component='navbar'][data-nav-dark]:not(:has(.w-nav-button.w--open))
+  .navbar_menu-dropdown-toggle:is(:hover, .w--open) {
+  background-color: rgba(255, 255, 255, 0.14);
 }
 
 [data-component='navbar'][data-nav-dark]:not(:has(.w-nav-button.w--open))
