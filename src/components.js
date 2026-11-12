@@ -14,6 +14,10 @@
 
 export default [
   {
+    selector: "[data-component='custom-select']",
+    importFn: () => import('./components/custom-select.js'),
+  },
+  {
     selector: "[data-component='hero-video']",
     importFn: () => import('./components/hero-video.js'),
   },

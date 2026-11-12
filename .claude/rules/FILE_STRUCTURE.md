@@ -7,6 +7,7 @@
 │   ├── config.js                  Shared project config (API keys, endpoints, flags)
 │   ├── components/
 │   │   ├── global.js              Runs on every page before components load
+│   │   ├── custom-select.js       Native select -> nav-style custom dropdown (data-component="custom-select")
 │   │   ├── navbar.js              Nav compacts on scroll, dropdown hover, stagger + gliding highlight (data-component="navbar")
 │   │   ├── blog-slider.js         Home blog CMS slider arrows (data-component="blog-slider")
 │   │   ├── marquee.js             Infinite testimonials marquee (data-component="marquee")
@@ -16,6 +17,7 @@
 │   ├── styles/
 │   │   ├── buttons.css            Button text-roll hover (imported by global.js)
 │   │   ├── navbar.css             Navbar scroll and dark-hero states (imported by navbar.js)
+│   │   ├── custom-select.css      Custom select card, highlight and motion (imported by custom-select.js)
 │   │   ├── nav-dropdown.css       Nav dropdown open/close, stagger and hover motion (imported by navbar.js)
 │   │   ├── blog-slider.css        Blog slider extras (imported by blog-slider.js)
 │   │   ├── marquee.css            Marquee keyframes (imported by marquee.js)
